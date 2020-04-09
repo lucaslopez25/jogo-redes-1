@@ -46,6 +46,7 @@ public class Partida {
 		char respostaUsuario = Character.toLowerCase(scanner.next().charAt(0));
 		if (perguntasDaPartida.get(contador).getCorreta() == respostaUsuario) pontos++;
 		scanner.close();
+		contador++;
 	}
 	
 	public boolean isLastPergunta() {
