@@ -6,9 +6,9 @@ import java.util.List;
 import utilidades.Conversor;
 
 public class Pergunta {
-	String pergunta = null;
-	List<String> respostas = new ArrayList<String>();
-	int correta = -1;
+	private String pergunta = null;
+	private List<String> respostas = new ArrayList<String>();
+	private int correta = -1;
 	
 	public Pergunta (String pergunta) {
 		setPergunta(pergunta);
