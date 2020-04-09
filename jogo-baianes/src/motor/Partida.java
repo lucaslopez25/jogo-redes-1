@@ -58,6 +58,7 @@ public class Partida {
 	
 	public void setFimPartida (long tempoFinal) {
 		duracao = tempoFinal - duracao;
+		partidaFinalizada = true;
 	}
 	
 	public int getPontos() {
@@ -66,5 +67,9 @@ public class Partida {
 	
 	public long getTempo() {
 		return duracao;
+	}
+	
+	public boolean isPartidaFinalizada () {
+		return partidaFinalizada;
 	}
 }

@@ -48,24 +48,23 @@ public class Motor {
 		p.setFimPartida(System.currentTimeMillis()/1000);
 		if (ultimasDuasPartidas.size() == 2) ultimasDuasPartidas.remove(0); //se o tamanho for 2, remova o primeiro
 		//o de cima poderia ser uma pilha, né? Eu estive pensando nisso...
-		ultimasDuasPartidas.add(p);
+		if (p.isPartidaFinalizada()) ultimasDuasPartidas.add(p);
 	}
 		
 	public String quemGanhou () {
 		String resposta = "NADA";
 		if (ultimasDuasPartidas.get(0).getPontos() > ultimasDuasPartidas.get(1).getPontos())
-			return ultimasDuasPartidas.get(0).getJogador();
+			resposta = ultimasDuasPartidas.get(0).getJogador();
 		if (ultimasDuasPartidas.get(1).getPontos() > ultimasDuasPartidas.get(0).getPontos())
-			return ultimasDuasPartidas.get(1).getJogador();
+			resposta = ultimasDuasPartidas.get(1).getJogador();
 		if (ultimasDuasPartidas.get(1).getPontos() == ultimasDuasPartidas.get(0).getPontos()) {
 			if (ultimasDuasPartidas.get(0).getTempo() > ultimasDuasPartidas.get(1).getTempo())
-				return ultimasDuasPartidas.get(0).getJogador();
+				resposta = ultimasDuasPartidas.get(0).getJogador();
 			if (ultimasDuasPartidas.get(1).getTempo() > ultimasDuasPartidas.get(0).getTempo())
-				return ultimasDuasPartidas.get(1).getJogador();
+				resposta = ultimasDuasPartidas.get(1).getJogador();
 		}
 		
 		return resposta;
-
 	}
 
 }
