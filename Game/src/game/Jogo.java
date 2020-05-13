@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import motor.Motor;
 import motor.Partida;
@@ -28,7 +30,7 @@ public class Jogo extends javax.swing.JFrame {
     private String message;
     private boolean pararSinal = true;
     
-    private Motor nucleo = null;
+    private Motor nucleo = new Motor();;
     private Partida partida = null;
     private Pergunta perguntaCopy = null;
     private Game game = null;
@@ -38,6 +40,33 @@ public class Jogo extends javax.swing.JFrame {
         nextButton.setEnabled(false);
     }
 
+    public Pergunta getPerguntaCopy() {
+        return perguntaCopy;
+    }
+
+    public void setPerguntaCopy(Pergunta perguntaCopy) {
+        this.perguntaCopy = perguntaCopy;
+    }
+
+    public Enumeration<AbstractButton> getButtonElements() {
+        return buttonGroup1.getElements();
+    }
+
+    public void setButtonGroup1(ButtonGroup buttonGroup1) {
+        this.buttonGroup1 = buttonGroup1;
+    }
+
+    public JLabel getLabelPergunta() {
+        return labelPergunta;
+    }
+
+    public void setLabelPergunta(String texto) {
+        this.labelPergunta.setText(texto);
+    }
+
+    protected Pergunta getNext(){
+        return partida.getNext();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -422,6 +451,8 @@ public class Jogo extends javax.swing.JFrame {
     private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
         // TODO add your handling code here:
         //reiniciar com o mesmo adversario
+        JOptionPane.showMessageDialog(null, "Criando outra partida com o mesmo adversário!");
+        comunicate("reiniciar");
     }//GEN-LAST:event_restartButtonActionPerformed
 
     /**
@@ -449,6 +480,9 @@ public class Jogo extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Jogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -490,6 +524,67 @@ public class Jogo extends javax.swing.JFrame {
             AbstractButton botao = lista.nextElement();
             botao.setSelected(false);
         }
+    }
+    
+    //função utilizada para liberar recursos de configuração do usuário e limpar campos
+    private void restartAfterOut(){
+        labelPergunta.setText(" ");
+        Enumeration<AbstractButton> botoes = buttonGroup1.getElements();
+        while(botoes.hasMoreElements()){
+            AbstractButton botao = botoes.nextElement();
+            botao.setText(" ");
+        }
+        nextButton.setEnabled(false);
+        inputIP.setEnabled(true);
+        inputPorta.setEnabled(true);
+        inputNome.setEnabled(true);
+        loginButton.setEnabled(true);
+        createButton.setEnabled(true);
+    }
+    //função para realizar o envio de mensagens e objetos para o cliente ou servidor
+    protected void comunicate(Object obj) {
+        try {
+            if (pararSinal) {
+                output.writeObject(obj);
+                output.flush();
+            }
+        } catch (Exception e) {
+            if (pararSinal) {
+                pararSinal = false;
+                JOptionPane.showMessageDialog(null, "Desculpe, mas houve algum problema na comunicação com seu adversário.\nReiniciando o jogo.");
+                finish();
+                restartAfterOut();
+            }
+        }
+    }
+    protected void finalizarPartida(){
+        partida.setFimPartida(System.currentTimeMillis()/1000);
+    }
+    /*
+        *função utilzada pelo servidor
+        *após o cliente estabelecer conexão
+        *o método prepare() preapara uma partida com a quantidade de perguntas informadas
+        *em seguinte, envia os dados da partida para o cliente
+    */
+    private void prepare(){
+        int qtdPerguntas = 10;
+        partida = nucleo.criarPartida(qtdPerguntas, player1);
+        Partida partidaToClient = new Partida();
+        partidaToClient.setPerguntas(partida.getDados());
+        comunicate(partidaToClient);
+    }
+    
+    private void reiniciarPartida(){
+        partida = null;
+        game.finish();
+        game = null;
+        labelPergunta.setText(" ");
+        Enumeration<AbstractButton> botoes = buttonGroup1.getElements();
+        while(botoes.hasMoreElements()){
+            AbstractButton botao = botoes.nextElement();
+            botao.setText(" ");
+        }
+        prepare();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -568,15 +663,34 @@ public class Jogo extends javax.swing.JFrame {
                                 partida.setJogador(player1);
                                 //start = true;
                                 comunicate("startTrue");
-                                game = new Game();
+                                game = new Game(Jogo.this);
                                 partida.setInicioPartida(System.currentTimeMillis()/1000);
+                            }else if (obj instanceof String) {
+                                String info = (String)obj;
+                                if(info.equals("reiniciar")){
+                                    int option = JOptionPane.showConfirmDialog(null, "Seu adversário quer reiniciar a partida, voce precisa confirmar?");
+                                    if(option==0){
+                                        reiniciarPartida();
+                                        comunicate("reiniciarConfirm");
+                                    }
+                                }else if(info.equals("reiniciarConfirm")){
+                                    reiniciarPartida();
+                                }
                             }
                         } else if (mssg.equals("recebeData")){ //recebe como server
                             if (obj instanceof String) {
                                 String info = (String)obj;
                                 if(info.equals("startTrue")){
-                                    game = new Game();
+                                    game = new Game(Jogo.this);
                                     partida.setInicioPartida(System.currentTimeMillis()/1000);
+                                }else if(info.equals("reiniciar")){
+                                    int option = JOptionPane.showConfirmDialog(null, "Seu adversário quer reiniciar a partida, voce precisa confirmar?");
+                                    if(option==0){
+                                        reiniciarPartida();
+                                        comunicate("reiniciarConfirm");
+                                    }
+                                }else if(info.equals("reiniciarConfirm")){
+                                    reiniciarPartida();
                                 }
                             }
                         } else if(mssg.equals("partidaEnd")){
@@ -592,111 +706,8 @@ public class Jogo extends javax.swing.JFrame {
                 }
             }
     }
-    //função utilizada para liberar recursos de configuração do usuário e limpar campos
-    private void restartAfterOut(){
-        labelPergunta.setText(" ");
-        Enumeration<AbstractButton> botoes = buttonGroup1.getElements();
-        while(botoes.hasMoreElements()){
-            AbstractButton botao = botoes.nextElement();
-            botao.setText(" ");
-        }
-        nextButton.setEnabled(false);
-        inputIP.setEnabled(true);
-        inputPorta.setEnabled(true);
-        inputNome.setEnabled(true);
-        loginButton.setEnabled(true);
-        createButton.setEnabled(true);
-    }
-    //função para realizar o envio de mensagens e objetos para o cliente ou servidor
-    private void comunicate(Object obj) {
-        try {
-            if (pararSinal) {
-                output.writeObject(obj);
-                output.flush();
-            }
-        } catch (Exception e) {
-            if (pararSinal) {
-                pararSinal = false;
-                JOptionPane.showMessageDialog(null, "Desculpe, mas houve algum problema na comunicação com seu adversário.\nReiniciando o jogo.");
-                finish();
-                restartAfterOut();
-            }
-        }
-    }
-    /*
-        *função utilzada pelo servidor
-        *após o cliente estabelecer conexão
-        *o método prepare() preapara uma partida com a quantidade de perguntas informadas
-        *em seguinte, envia os dados da partida para o cliente
-    */
-    private void prepare(){
-        nucleo = new Motor();
-        int qtdPerguntas = 10;
-        partida = nucleo.criarPartida(qtdPerguntas, player1);
-        Partida partidaToClient = new Partida();
-        partidaToClient.setPerguntas(partida.getDados());
-        comunicate(partidaToClient);
-    }
-    private class Game{
-        private boolean next = false;
-        private Thread t = null;
-        
-        public Game() {
-            t = new Thread(new GameRun());
-            t.setDaemon(true);
-            t.start();
-        }
-        private synchronized void verificaPausa() throws InterruptedException{
-            //se a variavel next valer true, indica que a thread deve dormir
-            while (next) {
-                wait();
-            }
-        }
-        public synchronized void setPausado(boolean status) {
-            this.next = status;
-            if (!this.next)
-               notify();
-        }
-        private void atualiza(){
-            Pergunta pergunta = partida.getNext();
-            if(pergunta!=null){
-                perguntaCopy = pergunta;
-                labelPergunta.setText(pergunta.getPergunta());
-                List<String> resp = pergunta.getRespostas();
-                Enumeration<AbstractButton> lista = buttonGroup1.getElements();
-                if(!resp.isEmpty()){
-                    int ponteiro = 0;
-                    while(lista.hasMoreElements()){
-                        AbstractButton botao = lista.nextElement();
-                        botao.setText(resp.get(ponteiro));
-                        ponteiro++;
-                    }
-                }
-            }else{
-                partida.setFimPartida(System.currentTimeMillis()/1000);
-                comunicate("partidaEnd");
-            }
-            this.next=true;
-        }
-        private void verificarGanhador(){
-            if(partida.isPartidaFinalizada() && partida.isOpponentEnded()){
-                
-            }
-        }
-        private class GameRun implements Runnable{
-            public void run(){
-                try {
-                    while (true) {                                
-                        verificaPausa();
-                        atualiza();       
-                        Thread.sleep(500);
-                    }
-                } catch (InterruptedException e) {
-                    JOptionPane.showMessageDialog(null, "Oops! Ocorreu um erro inesperado. \nPor favor, reinicie o jogo.");
-                }
-            }
-        }
-    }
+    
+    
     
 }
 
