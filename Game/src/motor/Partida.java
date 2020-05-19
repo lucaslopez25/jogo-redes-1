@@ -42,6 +42,12 @@ public class Partida implements Serializable{
 		perguntasDaPartida = perguntas;
                 limite = perguntasDaPartida.size();
 	}
+
+        public long getDuracao() {
+            return duracao;
+        }
+        
+        
 	
 	/*private void getNext () {
 		
@@ -66,7 +72,7 @@ public class Partida implements Serializable{
         public Pergunta getNext(){
             int aux = contador;
             contador++;
-            if(aux>limite){
+            if(aux>=limite){
                 return null;
             }
             return perguntasDaPartida.get(aux);

@@ -67,6 +67,10 @@ public class Jogo extends javax.swing.JFrame {
     protected Pergunta getNext(){
         return partida.getNext();
     }
+
+    public Partida getPartida() {
+        return partida;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,7 +101,6 @@ public class Jogo extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         chat = new javax.swing.JTextArea();
-        inputMessage = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Teste Baianês");
@@ -304,27 +307,20 @@ public class Jogo extends javax.swing.JFrame {
         chat.setRows(5);
         jScrollPane1.setViewportView(chat);
 
-        inputMessage.setBackground(new java.awt.Color(51, 51, 51));
-        inputMessage.setForeground(new java.awt.Color(255, 255, 0));
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputMessage)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(inputMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -350,7 +346,7 @@ public class Jogo extends javax.swing.JFrame {
             output.flush();
             input = new ObjectInputStream(socket.getInputStream());
             
-            chat.append("Advesario encontrado! \n");
+            chat.append("Adversário encontrado! \n");
             player1 = inputNome.getText();
             message = (String) input.readObject();
             player2 = message;
@@ -364,7 +360,7 @@ public class Jogo extends javax.swing.JFrame {
             loginButton.setEnabled(false);
             createButton.setEnabled(false);
             
-            chat.append("Partida iniciando");
+            chat.append("Partida iniciando. \n");
             chat.setCaretPosition(chat.getText().length());
             
             new recebeMensagem("Recebe");	
@@ -443,15 +439,19 @@ public class Jogo extends javax.swing.JFrame {
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Resetando jogo...\nVocê deverá entrar ou criar uma nova partida.");
-        finish();
-        restartAfterOut();
+        int opcao = JOptionPane.showConfirmDialog(null, "Você irá sair da partida atual, deseja realmente resetar?");
+        if(opcao==0){
+            JOptionPane.showMessageDialog(null, "Resetando jogo...\nVocê deverá entrar ou criar uma nova partida.");
+            finish();
+            restartAfterOut();
+        }
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
         // TODO add your handling code here:
         //reiniciar com o mesmo adversario
-        JOptionPane.showMessageDialog(null, "Criando outra partida com o mesmo adversário!");
+        JOptionPane.showMessageDialog(null, "O seu adversário precisa aceitar, aguardando resposta...");
+        chat.append("Agaurdando resposta do adversário...\n");
         comunicate("reiniciar");
     }//GEN-LAST:event_restartButtonActionPerformed
 
@@ -559,6 +559,20 @@ public class Jogo extends javax.swing.JFrame {
     }
     protected void finalizarPartida(){
         partida.setFimPartida(System.currentTimeMillis()/1000);
+        chat.append("Esperando seu adversário terminar!\n");
+        setButtonsEnabled(false);
+    }
+    
+    private void setButtonsEnabled(boolean info){
+        labelPergunta.setText("-");
+        labelPergunta.setEnabled(info);
+        this.nextButton.setEnabled(info);
+        Enumeration<AbstractButton> botoes = buttonGroup1.getElements();
+        while(botoes.hasMoreElements()){
+            AbstractButton botao = botoes.nextElement();
+            botao.setText("-");
+            botao.setEnabled(info);
+        }
     }
     /*
         *função utilzada pelo servidor
@@ -576,15 +590,10 @@ public class Jogo extends javax.swing.JFrame {
     
     private void reiniciarPartida(){
         partida = null;
-        game.finish();
+        game.setEnd(true);
         game = null;
-        labelPergunta.setText(" ");
-        Enumeration<AbstractButton> botoes = buttonGroup1.getElements();
-        while(botoes.hasMoreElements()){
-            AbstractButton botao = botoes.nextElement();
-            botao.setText(" ");
-        }
-        prepare();
+        setButtonsEnabled(true);
+        chat.append("Reiniciando partida! \n");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -592,7 +601,6 @@ public class Jogo extends javax.swing.JFrame {
     private javax.swing.JTextArea chat;
     private javax.swing.JButton createButton;
     private javax.swing.JTextField inputIP;
-    private javax.swing.JTextField inputMessage;
     private javax.swing.JTextField inputNome;
     private javax.swing.JTextField inputPorta;
     private javax.swing.JLabel jLabel1;
@@ -620,17 +628,18 @@ public class Jogo extends javax.swing.JFrame {
         public void run() {
             try {
                 serverSocket = new ServerSocket(Integer.parseInt(inputPorta.getText()));
+                chat.append("Esperando adversário");
                 socket = serverSocket.accept();
                 output = new ObjectOutputStream(socket.getOutputStream());
                 input = new ObjectInputStream(socket.getInputStream());
                 
-                chat.append("Advesario encontrado! \n");
+                chat.append("Adversário encontrado! \n");
                 comunicate(inputNome.getText());
                 
                 player1 = inputNome.getText();
                 message = (String)input.readObject();
                 player2 = message;
-                chat.append("Seu advesário: " + player2 + "\n");
+                chat.append("Seu adversário: " + player2 + "\n");
                 chat.append("Partida iniciando! \n");
                 
                 prepare();
@@ -665,17 +674,45 @@ public class Jogo extends javax.swing.JFrame {
                                 comunicate("startTrue");
                                 game = new Game(Jogo.this);
                                 partida.setInicioPartida(System.currentTimeMillis()/1000);
+                                restartButton.setEnabled(false);
                             }else if (obj instanceof String) {
                                 String info = (String)obj;
                                 if(info.equals("reiniciar")){
-                                    int option = JOptionPane.showConfirmDialog(null, "Seu adversário quer reiniciar a partida, voce precisa confirmar?");
+                                    int option = JOptionPane.showConfirmDialog(null, "Seu adversário quer reiniciar a partida, deseja jogar novamente?");
                                     if(option==0){
-                                        reiniciarPartida();
                                         comunicate("reiniciarConfirm");
+                                        reiniciarPartida();
                                     }
                                 }else if(info.equals("reiniciarConfirm")){
+                                    chat.append(player2+" aceitou seu pedido para jogar novamente!\n");
                                     reiniciarPartida();
+                                }else if(info.equals("partidaEnd")){
+                                    partida.setOpponentEnded(true);
                                 }
+                            }else if(obj instanceof Integer){
+                                if(!game.isEnd()){
+                                    comunicate(partida.getPontos());
+                                    int pontosAdv = (int)obj;
+                                    if(pontosAdv > partida.getPontos()){
+                                        JOptionPane.showMessageDialog(null, "Não foi dessa vez! O jogador " + player2 + " ganhou a partida!");
+                                    }else if(pontosAdv < partida.getPontos()){
+                                        JOptionPane.showMessageDialog(null, "Parabéns! Você ganhou a partida!");
+                                    }else{
+                                        comunicate(partida.getDuracao());
+                                    }
+                                    game.setEnd(true);
+                                    restartButton.setEnabled(true);
+                                }
+                            }else if(obj instanceof Long){
+                                long pontosAdv = (long)obj;
+                                if(pontosAdv < partida.getDuracao()){
+                                    JOptionPane.showMessageDialog(null, "Não foi dessa vez! O jogador " + player2 + " ganhou a partida!");
+                                }else if(pontosAdv > partida.getDuracao()){
+                                    JOptionPane.showMessageDialog(null, "Parabéns! Você ganhou a partida!");
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Incrível, vocês empataram!");
+                                }
+                                restartButton.setEnabled(true);
                             }
                         } else if (mssg.equals("recebeData")){ //recebe como server
                             if (obj instanceof String) {
@@ -683,23 +720,51 @@ public class Jogo extends javax.swing.JFrame {
                                 if(info.equals("startTrue")){
                                     game = new Game(Jogo.this);
                                     partida.setInicioPartida(System.currentTimeMillis()/1000);
+                                    restartButton.setEnabled(false);
                                 }else if(info.equals("reiniciar")){
-                                    int option = JOptionPane.showConfirmDialog(null, "Seu adversário quer reiniciar a partida, voce precisa confirmar?");
+                                    int option = JOptionPane.showConfirmDialog(null, "Seu adversário quer reiniciar a partida, deseja jogar novamente?");
                                     if(option==0){
-                                        reiniciarPartida();
                                         comunicate("reiniciarConfirm");
+                                        reiniciarPartida();
+                                        prepare();
                                     }
                                 }else if(info.equals("reiniciarConfirm")){
+                                    chat.append(player2+" aceitou seu pedido para jogar novamente!\n");
                                     reiniciarPartida();
+                                    prepare();
+                                }else if(info.equals("partidaEnd")){
+                                    partida.setOpponentEnded(true);
                                 }
+                            }else if(obj instanceof Integer){
+                                if(!game.isEnd()){
+                                    comunicate(partida.getPontos());
+                                    int pontosAdv = (int)obj;
+                                    if(pontosAdv > partida.getPontos()){
+                                        JOptionPane.showMessageDialog(null, "Não foi dessa vez! O jogador " + player2 + " ganhou a partida!");
+                                    }else if(pontosAdv < partida.getPontos()){
+                                        JOptionPane.showMessageDialog(null, "Parabéns! Você ganhou a partida!");
+                                    }else{
+                                        comunicate(partida.getDuracao());
+                                    }
+                                    game.setEnd(true);
+                                    restartButton.setEnabled(true);
+                                }
+                            }else if(obj instanceof Long){
+                                long pontosAdv = (long)obj;
+                                if(pontosAdv < partida.getDuracao()){
+                                    JOptionPane.showMessageDialog(null, "Não foi dessa vez! O jogador " + player2 + " ganhou a partida!");
+                                }else if(pontosAdv > partida.getDuracao()){
+                                    JOptionPane.showMessageDialog(null, "Parabéns! Você ganhou a partida!");
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Incrível, vocês empataram!");
+                                }
+                                restartButton.setEnabled(true);
                             }
-                        } else if(mssg.equals("partidaEnd")){
-                            partida.setOpponentEnded(true);
-                        }
+                        } 
                     }catch(Exception ex){
                         auxsinal = false;
                         JOptionPane.showMessageDialog(null, "O seu adversário saiu da partida!");
-                        chat.append("Procurando por um novo adversário");
+                        chat.append("Por favor, selecione novamente 'Entrar' ou 'Criar' para jogar. \n");
                         finish();
                         restartAfterOut();
                     }

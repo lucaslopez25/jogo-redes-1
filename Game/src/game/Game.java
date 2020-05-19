@@ -1,24 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
+import motor.Partida;
 import motor.Pergunta;
 
-/**
- *
- * @author PICHAU
- */
 public class Game{
         private boolean next = false;
         private Thread t = null;
         private Jogo jogo = null;
+        private boolean end = false;
         
         public Game(Jogo jogo) {
             this.jogo=jogo;
@@ -55,26 +48,41 @@ public class Game{
             }else{
                 jogo.finalizarPartida();
                 jogo.comunicate("partidaEnd");
+                this.next = false;
             }
             this.next=true;
         }
         private void verificarGanhador(){
-            //if(partida.isPartidaFinalizada() && partida.isOpponentEnded()){
-                
-            //}
+            Partida partidaTemp = jogo.getPartida();
+            if(partidaTemp.isPartidaFinalizada() && partidaTemp.isOpponentEnded()){
+                int pontos = partidaTemp.getPontos();
+                jogo.comunicate(pontos);
+            }
         }
-        protected void finish(){
-            t.interrupt();
+
+        protected boolean isEnd() {
+            return end;
         }
+
+        protected void setEnd(boolean end) {
+            this.end = end;
+        }
+        
         private class GamesRun implements Runnable{
             public void run(){
                 try {
-                    while (true) {                                
-                        verificaPausa();
-                        atualiza();       
-                        Thread.sleep(500);
+                    while (true) {     
+                        if(isEnd()){
+                            return;
+                        }else{
+                            verificarGanhador();
+                            verificaPausa();
+                            atualiza();       
+                            Thread.sleep(500);
+                        }
                     }
                 } catch (InterruptedException e) {
+                    System.out.println(e);
                     JOptionPane.showMessageDialog(null, "Oops! Ocorreu um erro inesperado. \nPor favor, reinicie o jogo.");
                 }
             }
