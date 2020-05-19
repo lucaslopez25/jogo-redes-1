@@ -1,49 +1,49 @@
 [
-	{	"pergunta":"O que significa \"T· Viajando?\"",
-		"a":"Quando a Pessoa Est· Falando Besteira.",
+	{	"pergunta":"O que significa \"T√° Viajando?\"",
+		"a":"Quando a Pessoa Est√° Falando Besteira.",
 		"b":"Quando a Pessoa Foi Viajar.",
-		"c":"Quando a Pessoa Est· Falando Algo Que N„o Tem Nada Haver Com o Assunto.",
+		"c":"Quando a Pessoa Est√° Falando Algo Que N√£o Tem Nada Haver Com o Assunto.",
 		"correta":"c"
 	}
 	,
 	{	"pergunta":"O que significa a palavra \"Massa?\"",
-		"a":"AutÍntico",
+		"a":"Aut√™ntico",
 		"b":"legal",
-		"c":"LegÌtimo",
+		"c":"Leg√≠timo",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Se ligue?\"",
-		"a":"Prestar AtenÁ„o",
+	{	"pergunta":"O que significa a express√£o \"Se ligue?\"",
+		"a":"Prestar Aten√ß√£o",
 		"b":"Tomar Cuidado",
 		"c":"Ficar Atento",
 		"correta":"a"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Pegue a vis„o?\"",
+	{	"pergunta":"O que significa a express√£o \"Pegue a vis√£o?\"",
 		"a":"Tomar Cuidado",
-		"b":"Prestar AtenÁ„o",
-		"c":"Peguar o ”culos",
+		"b":"Prestar Aten√ß√£o",
+		"c":"Peguar o √ìculos",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Se Pique?\"",
+	{	"pergunta":"O que significa a express√£o \"Se Pique?\"",
 		"a":"Saia Daqui",
 		"b":"Corra",
-		"c":"V· Embora",
+		"c":"V√° Embora",
 		"correta":"a"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Comer ¡gua?\"",
-		"a":"Esquentar ¡gua",
-		"b":"Tomar ¡gua",
+	{	"pergunta":"O que significa a express√£o \"Comer √Ågua?\"",
+		"a":"Esquentar √°gua",
+		"b":"Tomar √°gua",
 		"c":"Beber",
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"L· Ele?\"",
+	{	"pergunta":"O que significa a express√£o \"L√° Ele?\"",
 		"a":"Deus me Livre",
-		"b":"T· Maluco",
+		"b":"T√° Maluco",
 		"c":"Ficou Doido",
 		"correta":"a"
 	}
@@ -55,58 +55,58 @@
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Boca De Me DÍ?\"",
+	{	"pergunta":"O que significa a express√£o \"Boca De Me D√™?\"",
 		"a":"Pessoa que Come Muito",
 		"b":"Fala Muito das Outras",
 		"c":"Pessoa Pidona",
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"L· Na Casa Da Porra?\"",
+	{	"pergunta":"O que significa a expressÔøΩo \"L√° Na Casa Da Porra?\"",
 		"a":"Lugar Longe",
 		"b":"Lugar Muito Longe",
 		"c":"Lugar Periogoso",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Bater Um Baba?\"",
-		"a":"Jogar FuteVÙlei",
-		"b":"Jogar VÙlei",
+	{	"pergunta":"O que significa a express√£o \"Bater Um Baba?\"",
+		"a":"Jogar FuteV√¥lei",
+		"b":"Jogar V√¥lei",
 		"c":"Jogar Futebol",
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a palavra \"MiguÈ?\"",
+	{	"pergunta":"O que significa a palavra \"Migu√©?\"",
 		"a":"Mentira",
 		"b":"Enganar",
 		"c":"Trapacear",
 		"correta":"a"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Deixa Na CocÛ?\"",
+	{	"pergunta":"O que significa a express√£o \"Deixa Na Coc√≥?\"",
 		"a":"Deixa Guarado",
 		"b":"Deixa Escondido",
 		"c":"Deixa em Segredo",
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Ficar De Boa?\"",
+	{	"pergunta":"O que significa a express√£o \"Ficar De Boa?\"",
 		"a":"Ficar Sossegado",
 		"b":"Ficar Tranquilo",
 		"c":"Ficar Calmo",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Parta A Mil?\"",
-		"a":"Saia R·pido",
+	{	"pergunta":"O que significa a express√£o \"Parta A Mil?\"",
+		"a":"Saia R√°pido",
 		"b":"Saia Com Cuidado",
-		"c":"Se Corte Em Mil PedaÁos",
+		"c":"Se Corte Em Mil Peda√ßos",
 		"correta":"a"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"V· Num PÈ e Volte No Outro?\"",
-		"a":"V· Pulando Em Um PÈ e Volte Pulando Em Outro",
-		"b":"N„o Demore",
+	{	"pergunta":"O que significa a express√£o \"V√° Num P√© e Volte No Outro?\"",
+		"a":"V√° Pulando Em Um P√© e Volte Pulando Em Outro",
+		"b":"N√£o Demore",
 		"c":"Pode Ir Portanto Que Volte",
 		"correta":"b"
 	}
@@ -118,56 +118,56 @@
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Deu Um Zig?\"",
+	{	"pergunta":"O que significa a express√£o \"Deu Um Zig?\"",
 		"a":"Se Atrapalhou com Algo",
-		"b":"N„o Fez Algo",
+		"b":"N√£o Fez Algo",
 		"c":"Fugiu de Algo",
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"ColÈ de Mermo?\"",
-		"a":"N„o Entendi",
-		"b":"O que est· Acontecendo?",
+	{	"pergunta":"O que significa a express√£o \"Col√© de Mermo?\"",
+		"a":"N√£o Entendi",
+		"b":"O que est√° Acontecendo?",
 		"c":"O que foi",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"O Oue … Oue T· Pegando?\"",
-		"a":"N„o Entendi",
-		"b":"O que est· Acontecendo?",
+	{	"pergunta":"O que significa a express√£o \"O Oue √© Oue T√° Pegando?\"",
+		"a":"N√£o Entendi",
+		"b":"O que est√° Acontecendo?",
 		"c":"O que foi",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"T· Me Tirando?\"",
-		"a":"T· Tirando Onda Comigo",
-		"b":"T· Me Elogiando",
-		"c":"T· Me Estranhando",
+	{	"pergunta":"O que significa a express√£o \"T√° Me Tirando?\"",
+		"a":"T√° Tirando Onda Comigo",
+		"b":"T√° Me Elogiando",
+		"c":"T√° Me Estranhando",
 		"correta":"a"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Estou De KekÈ?\"",
+	{	"pergunta":"O que significa a express√£o \"Estou De Kek√©?\"",
 		"a":"Estou Tranquilo",
 		"b":"Estou Estressado",
 		"c":"Estou Chateado",
 		"correta":"a"
 	}
  	,
-	{	"pergunta":"O que significa a express„o \"Pegou Ar?\"",
+	{	"pergunta":"O que significa a express√£o \"Pegou Ar?\"",
 		"a":"Ficou Animado",
 		"b":"Ficou Gripado",
 		"c":"Ficou Irritado",
 		"correta":"c"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Boutou Pa FudÍ?\"",
+	{	"pergunta":"O que significa a express√£o \"Boutou Pa Fud√™?\"",
 		"a":"Irritou",
 		"b":"Arrasou",
 		"c":"Alegrou",
 		"correta":"b"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Aquela Pessoa È 09?\"",
+	{	"pergunta":"O que significa a express√£o \"Aquela Pessoa √© 09?\"",
 		"a":"Pessoa Fofoqueira",
 		"b":"Pessoa Educada",
 		"c":"Pessoa Mentirosa",
@@ -182,13 +182,13 @@
 	}
 	,
 	{	"pergunta":"O que significa a palavra \"Rebanho?\"",
-		"a":"V·rias Pessoas",
-		"b":"V·rios Bois",
-		"c":"V·rias Cabras",
+		"a":"V√°rias Pessoas",
+		"b":"V√°rios Bois",
+		"c":"V√°rias Cabras",
 		"correta":"a"
 	}
 	,
-	{	"pergunta":"O que significa a express„o \"Vamos no Reggae?\"",
+	{	"pergunta":"O que significa a express√£o \"Vamos no Reggae?\"",
 		"a":"Vamos na Balada",
 		"b":"Vamos Beber",
 		"c":"Vamos em uma Festa",
