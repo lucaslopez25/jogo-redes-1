@@ -15,13 +15,13 @@ import org.json.simple.parser.ParseException;
 
 public class ImportadorDeJson {
 	
-	public static ArrayList<Pergunta> jsonParaArray (File lugarOndeEuVouAbrirOJson) {
+	public static ArrayList<Pergunta> jsonParaArray (File pathDoJson) {
 		
 		JSONParser jsonParser = new JSONParser();
 		JSONArray listaPerguntas = null;
 		ArrayList<Pergunta> minhasPerguntas = new ArrayList<Pergunta>();
 		
-		try (FileReader leitor = new FileReader(lugarOndeEuVouAbrirOJson))
+		try (FileReader leitor = new FileReader(pathDoJson))
         {
             //Read JSON file
             Object obj = jsonParser.parse(leitor);

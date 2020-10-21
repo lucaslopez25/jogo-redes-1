@@ -35,7 +35,7 @@ public class Partida {
 	
 	private void getNext () {
 		/**
-		 * Retorna a pergunta como um System.out.println(); diretamente no console mais pr�ximo.
+		 * Retorna a pergunta como um System.out.println(); diretamente no console mais proximo.
 		 */
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(perguntasDaPartida.get(contador).getPergunta());
@@ -62,7 +62,7 @@ public class Partida {
 	
 	public boolean isLastPergunta() {
 		/**
-		 * Retorna se � a �ltima pergunta.
+		 * Retorna se eh a ultima pergunta
 		 * Bom para usar como condicional de um loop para passar as perguntas.
 		 */
 		return (perguntasDaPartida.size() == contador);

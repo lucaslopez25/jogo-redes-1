@@ -19,7 +19,7 @@ public class Motor {
 		
 	public Partida criarPartida (int numeroDePerguntas, String nomeDoJogador) {
 		/**
-		 * Partida sai daqui já iniciada.
+		 * Partida sai daqui ja iniciada.
 		 */
 		ArrayList<Pergunta> perguntasSelecionadas = new ArrayList<Pergunta>();
 		for (int i = 0 ; i < numeroDePerguntas ; i++) {
@@ -39,15 +39,15 @@ public class Motor {
 	/*
 	public void iniciarPartida (Partida p) {
 		p.setInicioPartida(System.currentTimeMillis()/1000);
-		//esse método acima é privado.
-		//O método INICIARPARTIDA é um apêndice.
+		//esse metodo acima e privado.
+		//O metodo INICIARPARTIDA e um apendice.
 	}
 	*/
 		
 	public void finalizarPartida (Partida p) {
 		p.setFimPartida(System.currentTimeMillis()/1000);
 		if (ultimasDuasPartidas.size() == 2) ultimasDuasPartidas.remove(0); //se o tamanho for 2, remova o primeiro
-		//o de cima poderia ser uma pilha, né? Eu estive pensando nisso...
+		//o de cima poderia ser uma pilha, ne? Eu estive pensando nisso...
 		if (p.isPartidaFinalizada()) ultimasDuasPartidas.add(p);
 	}
 		

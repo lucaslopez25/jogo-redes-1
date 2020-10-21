@@ -26,13 +26,13 @@ public class Pergunta {
 	
 	public void setCorreta (int valor) {
 		if (valor == 0 || valor == 1 || valor == 2) this.correta = valor;
-		else System.err.println("Argumento \"" + valor + "\" inválido! Corrija isso aí...");
+		else System.err.println("Argumento \"" + valor + "\" invalido! Corrija isso ai...");
 	}
 	
 	public void setCorreta (char arg) {
 		int valor = Conversor.convertaCharToInt(arg);
 		if (valor == 0 || valor == 1 || valor == 2) this.correta = valor;
-		else System.err.println("Argumento \"" + arg + "\" inválido! Corrija isso aí...");
+		else System.err.println("Argumento \"" + arg + "\" invalido! Corrija isso ai...");
 	}
 
 	public String getPergunta() {

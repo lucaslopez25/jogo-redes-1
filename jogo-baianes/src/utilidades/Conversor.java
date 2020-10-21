@@ -13,11 +13,11 @@ public class Conversor {
 			case 'c':
 				return (int) 2;
 			default:
-				System.err.println("Argumento \"" + arg + "\" inválido! Corrija isso aí...");
+				System.err.println("Argumento \"" + arg + "\" invalido! Corrija isso ai...");
 				System.exit(0);
 		}
 		
-		return -1; //eu coloquei isso aqui pq o eclipse tava reclamando, tá ok????
+		return -1; //eu coloquei isso aqui pq o eclipse tava reclamando, ta ok????
 	}
 	
 	public static char convertaIntToChar (int arg) {
@@ -29,7 +29,7 @@ public class Conversor {
 		case 2:
 			return (char) 'c';
 		default:
-			System.err.println("Argumento \"" + arg + "\" inválido! Corrija isso aí...");
+			System.err.println("Argumento \"" + arg + "\" invalido! Corrija isso ai...");
 			System.exit(0);
 		}
 	
